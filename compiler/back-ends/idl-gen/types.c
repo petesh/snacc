@@ -19,6 +19,7 @@
 
 #include <ctype.h>
 #include <stdio.h>
+#include <memory.h>
 
 #include "asn-incl.h"
 #include "define.h"

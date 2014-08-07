@@ -742,7 +742,7 @@ AddFirstTag PARAMS ((definedTags, t),
             return TRUE;
 
     }
-
+    return FALSE;
 }  /* AddFirstTag */
 
 

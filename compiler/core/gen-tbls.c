@@ -39,6 +39,8 @@
 #include "asn1module.h"
 #include "tbl.h"
 #include "gen-tbls.h"
+#include <string.h>
+#include <memory.h>
 
 extern Module *usefulTypeModG;
 
@@ -130,7 +132,7 @@ GenTypeTbls PARAMS ((mods, fileName, tableFileVersion),
 
     if (ExpBufWriteError (&buf))
     {
-        fprintf (stderr,"ERROR: buffer write error during encoding of type table.\n", fileName);
+        fprintf (stderr,"ERROR: buffer write error during encoding of type table.\n");
         return;
     }
 

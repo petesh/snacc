@@ -42,6 +42,8 @@
 
 #include <stdio.h>
 #include <ctype.h>  /* for islower/toupper */
+#include <memory.h>
+#include <string.h>
 
 #include "asn-incl.h"
 #include "mem.h"

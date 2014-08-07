@@ -1059,8 +1059,6 @@ else
   ISC=
 fi
 
-if test -n "$GCC"; then
-fi
 echo $ac_n "checking how to run the C preprocessor""... $ac_c" 1>&6
 echo "configure:1066: checking how to run the C preprocessor" >&5
 # On Suns, sometimes $CPP names a directory.
@@ -4286,7 +4284,6 @@ else
   enable_fast_install=yes
 fi
 
-
 # Make sure we can run config.sub.
 if ${CONFIG_SHELL-/bin/sh} $ac_config_sub sun4 >/dev/null 2>&1; then :
 else { echo "configure: error: can not run $ac_config_sub" 1>&2; exit 1; }
@@ -4294,6 +4291,7 @@ fi
 
 echo $ac_n "checking host system type""... $ac_c" 1>&6
 echo "configure:4297: checking host system type" >&5
+
 
 host_alias=$host
 case "$host_alias" in
@@ -4616,7 +4614,6 @@ else
   fi
 fi
 rm -f confcache
-
 
 # Actually configure libtool.  ac_aux_dir is where install-sh is found.
 CC="$CC" CFLAGS="$CFLAGS" CPPFLAGS="$CPPFLAGS" \

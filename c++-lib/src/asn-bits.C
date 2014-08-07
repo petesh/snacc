@@ -67,6 +67,7 @@
 
 extern StrStk strStkG;
 unsigned short int  strStkUnusedBitsG;
+using namespace std;
 
 char numToHexCharTblG[16] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
 
@@ -440,7 +441,7 @@ void AsnBits::BDecConsBits (BUF_TYPE b, AsnLen elmtLen, AsnLen &bytesDecoded, EN
 }  /* BDecConsBits */
 
 // prints the BIT STRING to the given ostream.
-void AsnBits::Print (ostream &os) const
+void AsnBits::Print (std::ostream &os) const
 {
     size_t octetLen = (bitLen+7)/8;
 

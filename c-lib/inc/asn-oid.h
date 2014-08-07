@@ -58,7 +58,7 @@ typedef struct OID
 {
   struct OID	*next;
   long int	arcNum;
-#if COMPILER || TTBL
+#if (defined(COMPILER) && COMPILER == 1) || (defined(TTBL) && TTBL == 1)
   struct Value	*valueRef;
 #endif
 } OID;

@@ -37,6 +37,7 @@
 #include <strings.h>
 #endif
 #include <stdio.h>
+#include <time.h>
 
 #include "asn-incl.h"
 #include "asn1module.h"
@@ -165,7 +166,7 @@ PrintIDLSimpleDef PARAMS ((idl, r, td),
     SpecialPrintType (idl, td, td->type);
     fprintf (idl, " */\n");
 
-    if (hasNamedElmts = HasNamedElmts (td->type))
+    if ((hasNamedElmts = HasNamedElmts (td->type)))
     {
 	int	tlen = strlen (td->idlTypeDefInfo->typeName) - strlen (r->typeSuffix);
 	switch (GetBuiltinType (td->type))

@@ -22,7 +22,7 @@
  */
 
 #define PrintErrLoc( fileName, lineNo)\
-			fprintf (stderr, "file \"%s\", line %d: ", fileName, lineNo)
+			fprintf (stderr, "file \"%s\", line %ld: ", fileName, (long)lineNo)
 
 /*
  * macro to allocate room for str & null & put in give STR*

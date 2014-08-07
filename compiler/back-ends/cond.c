@@ -19,7 +19,7 @@
 
 #include "asn-incl.h"
 #include "cond.h"
-
+#include <string.h>
 
 void
 PrintConditionalIncludeOpen PARAMS ((f, fileName),

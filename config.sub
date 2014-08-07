@@ -185,7 +185,7 @@ case $basic_machine in
 	      | sparc64-* | mips64-* | mipsel-* \
 	      | mips64el-* | mips64orion-* | mips64orionel-*  \
 	      | mipstx39-* | mipstx39el-* \
-	      | f301-* | armv*-*)
+	      | f301-* | armv*-* | x86_64-* )
 		;;
 	# Recognize the various machine names and aliases which stand
 	# for a CPU type and a company and sometimes even an OS.

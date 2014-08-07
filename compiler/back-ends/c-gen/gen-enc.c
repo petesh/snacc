@@ -449,7 +449,7 @@ PrintCBerElmtEncodeCode PARAMS ((src, td, parent, e, level, varName),
         case C_ANY:
             /* ANY's enc's do tag and len so zap the Content suffix */
             fprintf (src,"     /* ANY - Fix Me! */\n");
-            fprintf (src, "    SetAnyTypeBy???(%s, ???);\n", elmtVarRef);
+            fprintf (src, "    SetAnyTypeBy??" "?(%s, ??" "?);\n", elmtVarRef);
             fprintf (src, "    %s = B%s (b, %s);\n", itemLenNameG, ctri->encodeRoutineName, elmtVarRef);
             break;
 
@@ -560,7 +560,7 @@ PrintCBerListEncoderCode PARAMS ((src, td, t, level, varName),
         case C_ANY:
             /* ANY's enc's do tag and len so zap the Content suffix */
             fprintf (src,"     /* ANY - Fix Me! */\n");
-            fprintf (src, "    SetAnyTypeBy???(%s, ???);\n", elmtVarRef);
+            fprintf (src, "    SetAnyTypeBy??" "?(%s, ??" "?);\n", elmtVarRef);
             fprintf (src, "    %s = B%s (b, %s);\n", itemLenNameG, ctri->encodeRoutineName, elmtVarRef);
             break;
 

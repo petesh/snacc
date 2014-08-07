@@ -26,7 +26,7 @@
  * new file
  */
 
-#if META
+#if defined(META) && META == 1
 
 typedef enum
 {

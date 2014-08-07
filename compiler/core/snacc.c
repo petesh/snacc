@@ -88,7 +88,7 @@
 
 #include "snacc.h"
 
-#if TIME_WITH_SYS_TIME
+#if defined(TIME_WITH_SYS_TIME) && TIME_WITH_SYS_TIME == 1
 # include <sys/time.h>
 # include <time.h>
 #else
@@ -99,7 +99,7 @@
 # endif
 #endif
 
-#if STDC_HEADERS || HAVE_STRING_H
+#if (defined(STDC_HEADERS) && (STDC_HEADERS == 1)) || (defined(HAVE_STRING_H) && (HAVE_STRING_H == 1))
 #include <string.h>
 #else
 #include <strings.h>
@@ -122,7 +122,7 @@
 #include "normalize.h"
 #include "do-macros.h"
 #include "snacc-util.h"
-#if META
+#if defined(META) && META == 1
 #include "meta.h"
 #endif
 
@@ -138,7 +138,7 @@
 
 #include "gen-tbls.h"  /* for type table generation */
 
-#if IDL
+#if defined(IDL) && IDL == 1
 #include "idl-gen/rules.h"
 #include "idl-gen/types.h"
 #include "idl-gen/gen-code.h"
@@ -171,7 +171,7 @@ Usage PARAMS ((prgName, fp),
 {
     fprintf (fp, "\nUsage: %s ", prgName);
     fprintf (fp, "[-h] [-P] [-t] [-v] [-e] [-d] [-p] [-f]\n");
-#if IDL
+#if defined(IDL) && IDL == 1
     fprintf (fp, "            [-c | -C | -[T|O] <table output file> | -idl ]\n");
 #else
     fprintf (fp, "            [-c | -C | -[T|O] <table output file>]\n");
@@ -179,9 +179,9 @@ Usage PARAMS ((prgName, fp),
     fprintf (fp, "            [-u <useful types ASN.1 file>]\n");
     fprintf (fp, "            [-mm] [-mf <max file name length>]\n");
     fprintf (fp, "            [-l <neg number>]\n");
-#if META
+#if defined(META) && META == 1
     fprintf (fp, "            [-meta <type list>] [-mA | -mC]\n");
-#if TCL
+#if defined(TCL) && TCL == 1
     fprintf (fp, "            [-tcl <type list>]\n");
 #endif
 #endif
@@ -192,7 +192,7 @@ Usage PARAMS ((prgName, fp),
     fprintf (fp, "  -novolat   for broken C++ compilers: return *this after calling abort()\n");
     fprintf (fp, "  -T <filename> write a type table file for the ASN.1 modules to file filename\n");
     fprintf (fp, "  -O <filename> writes the type table file in the original (<1.3b2) format\n");
-#if IDL
+#if defined(IDL) && IDL == 1
     fprintf (fp, "  -idl generate CORBA IDL\n");
 #endif
     fprintf (fp, "  -u <filename> specifies the ASN.1 file with definition of the useful types\n");
@@ -216,11 +216,11 @@ Usage PARAMS ((prgName, fp),
 
     fprintf (fp, "  -l <neg num> where to start error longjmp values decending from (obscure).\n");
 
-#if META
+#if defined(META) && META == 1
     fprintf (fp, "  -meta <type list> generate meta code that describes the generated types. Implies -C.\n");
     fprintf (fp, "  -mA  metacode: use names as defined in the ASN.1 files.\n");
     fprintf (fp, "  -mC  metacode: use names as used in the generated C++ files.\n");
-#if TCL
+#if defined(TCL) && TCL == 1
     fprintf (fp, "  -tcl <type list> generate code for a Tcl interpreter. Implies -meta.\n");
 #endif
     fprintf (fp, "    <type list> has the following syntax: <module>.<type>[,<module>.<type>[...]]\n");
@@ -266,7 +266,7 @@ typedef struct
 } SRC_FILE;
 
 
-#if META
+#if defined(META) && META == 1
 static MetaPDU *parse_type_list (arg)
     char *arg;
 {
@@ -317,16 +317,16 @@ int main PARAMS ((argc, argv),
     int			genPrintCode = FALSE;
     int			genValueCode = FALSE;
     int			genFreeCode = FALSE;
-#if META
+#if defined(META) && META == 1
     MetaNameStyle	genMetaCode = META_off;
     MetaPDU		*meta_pdus = NULL;
-#if TCL
+#if defined(TCL) && TCL == 1
     int			genTclCode = FALSE;
 #endif
 #endif
     int			genCCode = FALSE;        /* defaults to C if neither specified */
     int			genCxxCode = FALSE;
-#if IDL
+#if defined(IDL) && IDL == 1
     int			genIDLCode = FALSE;
 #endif
     long		longJmpVal = -100;
@@ -372,7 +372,7 @@ int main PARAMS ((argc, argv),
                     currArg++;
                 break;
 
-#if IDL
+#if defined(IDL) && IDL == 1
                 case 'i':
 		    if (!strcmp (argv[currArg]+1, "idl"))
 		    {
@@ -387,7 +387,7 @@ int main PARAMS ((argc, argv),
                 case 't':
 		    if (!strcmp (argv[currArg]+1, "tcl"))
 		    {
-#if TCL
+#if defined(TCL) && TCL == 1
 			meta_pdus = parse_type_list (argv[++currArg]);
 			genTclCode = TRUE;
 			if (!genMetaCode)
@@ -499,7 +499,7 @@ int main PARAMS ((argc, argv),
                         }
                         break;
                     }
-#if META
+#if defined(META) && META == 1
 		    else if (!strcmp (argv[currArg]+1, "meta"))
 		    {
 			meta_pdus = parse_type_list (argv[++currArg]);
@@ -569,7 +569,7 @@ error:
     }
 
     else if (genCCode + genCxxCode + genTypeTbls
-#if IDL
+#if defined(IDL) && IDL == 1
 						  + genIDLCode
 #endif
 								> 1)
@@ -580,7 +580,7 @@ error:
     }
 
     if (!genCCode && !genCxxCode && !genTypeTbls
-#if IDL
+#if defined(IDL) && IDL == 1
 						 && !genIDLCode
 #endif
 								)
@@ -793,7 +793,7 @@ error:
     else if (genCxxCode)
         FillCxxTypeInfo (&cxxRulesG, allMods);
 
-#if IDL
+#if defined(IDL) && IDL == 1
     else if (genIDLCode)
         FillIDLTypeInfo (&idlRulesG, allMods);
 #endif
@@ -839,7 +839,7 @@ error:
     else if (genTypeTbls)
         GenTypeTbls (allMods, tblFileName, genTypeTbls);
 
-#if IDL
+#if defined(IDL) && IDL == 1
     else if (genIDLCode)
         GenIDLCode (allMods, longJmpVal, genTypeCode, genValueCode, genPrintCode, genFreeCode);
 #endif
@@ -1030,10 +1030,10 @@ GenCxxCode PARAMS ((allMods, longJmpVal, genTypes, genValues, genEncoders, genDe
     DefinedObj		*fNames;
     int			fNameConflict = FALSE;
 
-#if META
+#if defined(META) && META == 1
     static const char	metabasefn[] = "modules";
     Meta		meta;
-#if TCL
+#if defined(TCL) && TCL == 1
     const MetaPDU	*pdu;
 #endif
 #endif
@@ -1044,7 +1044,7 @@ GenCxxCode PARAMS ((allMods, longJmpVal, genTypes, genValues, genEncoders, genDe
      * check for truncation --> name conflicts & exit if nec
      */
     fNames = NewObjList();
-#if META
+#if defined(META) && META == 1
     if (genMeta)
 	DefineObj (&fNames, meta.srcfn = MakeCxxSrcFileName (metabasefn));
 #endif
@@ -1059,7 +1059,7 @@ GenCxxCode PARAMS ((allMods, longJmpVal, genTypes, genValues, genEncoders, genDe
         currMod->dbHdrFileName  = MakedbHdrFileName (modBaseFileName); /* 19.8.93 IBM-ENC */
         currMod->dbSrcFileName  = MakedbSrcFileName (modBaseFileName); /* 19.8.93 IBM-ENC */
 #endif /* _IBM_ENC_ */
-#if META
+#if defined(META) && META == 1
 	{
 	    char *in, *out;
 
@@ -1094,7 +1094,7 @@ GenCxxCode PARAMS ((allMods, longJmpVal, genTypes, genValues, genEncoders, genDe
     /*
      * make C++ files
      */
-#if META
+#if defined(META) && META == 1
     if (genMeta)
     {
 	time_t now = time (NULL);
@@ -1144,11 +1144,11 @@ GenCxxCode PARAMS ((allMods, longJmpVal, genTypes, genValues, genEncoders, genDe
 #endif /* _IBM_ENC_ */
         }
     }
-#if META
+#if defined(META) && META == 1
     if (genMeta)
     {
 	fprintf (meta.srcfp, "\n");
-	fprintf (meta.srcfp, "#ifndef META\n");
+	fprintf (meta.srcfp, "#if !defined(META)\n");
 	fprintf (meta.srcfp, "#define META	1\n");
 	fprintf (meta.srcfp, "#endif\n");
 	if (meta_pdus)
@@ -1157,8 +1157,8 @@ GenCxxCode PARAMS ((allMods, longJmpVal, genTypes, genValues, genEncoders, genDe
 		if (!pdu->used)
 		    fprintf (stderr, "warning: PDU %s.%s couldn't be found\n", pdu->module, pdu->type);
 	}
-#if TCL
-	fprintf (meta.srcfp, "#ifndef TCL\n");
+#if defined(TCL) && TCL == 1
+	fprintf (meta.srcfp, "#if !defined(TCL)\n");
 	fprintf (meta.srcfp, "#define TCL	META\n");
 	fprintf (meta.srcfp, "#endif\n");
 #endif
@@ -1169,7 +1169,7 @@ GenCxxCode PARAMS ((allMods, longJmpVal, genTypes, genValues, genEncoders, genDe
 	    fprintf (meta.srcfp, "#include \"%s\"\n", currMod->cxxHdrFileName);
 	fprintf (meta.srcfp, "\n");
 
-	fprintf (meta.srcfp, "#if META\n\n");
+	fprintf (meta.srcfp, "#if defined(META) && META == 1\n\n");
 
 	fprintf (meta.srcfp, "const AsnModuleDesc *asnModuleDescs[] =\n");
 	fprintf (meta.srcfp, "{\n");
@@ -1180,7 +1180,7 @@ GenCxxCode PARAMS ((allMods, longJmpVal, genTypes, genValues, genEncoders, genDe
 
 	if (genTcl)
 	{
-	  fprintf (meta.srcfp, "#if TCL\n\n");
+	  fprintf (meta.srcfp, "#if defined(TCL) && TCL == 1\n\n");
 
 	  fprintf (meta.srcfp, "// hack to avoid the neccessity to list -ltk -ltcl both before and after -lasn1tcl:\n");
 	  fprintf (meta.srcfp, "static int (*dummy)(Tcl_Interp *) = Tcl_AppInit;\n\n");
@@ -1196,7 +1196,7 @@ GenCxxCode PARAMS ((allMods, longJmpVal, genTypes, genValues, genEncoders, genDe
 }  /* GenCxxCode */
 
 
-#if IDL
+#if defined(IDL) && IDL == 1
 /*
  * Given the list of parsed, linked, normalized, error-checked and sorted
  * modules, and some code generation flags, generates C++ code and

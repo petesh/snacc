@@ -107,7 +107,7 @@ AsnLen BEncEoc PROTO ((BUF_TYPE b));
 */
 void BDecEoc PROTO ((BUF_TYPE b, AsnLen *bytesDecoded, ENV_TYPE env));
 
-#if TTBL
+#if defined(TTBL) && TTBL == 1
 int PeekEoc PROTO ((BUF_TYPE b));
 #endif
 

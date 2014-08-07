@@ -25,7 +25,9 @@
 //
 // changed `_' to `-' in file names.
 
+using namespace std;
 #include "asn-incl.h"
+
 
 #if META
 

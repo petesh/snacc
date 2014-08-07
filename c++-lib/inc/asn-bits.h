@@ -105,14 +105,14 @@ public:
 
   PDU_MEMBER_MACROS
 
-  void				Print (ostream &) const;
+  void				Print (std::ostream &) const;
 
-#if META
+#if defined(META) && META == 1
   static const AsnBitsTypeDesc	_desc;
 
   const AsnTypeDesc		*_getdesc() const;
 
-#if TCL
+#if defined(TCL) && TCL == 1
   int				TclGetVal (Tcl_Interp *) const;
   int				TclSetVal (Tcl_Interp *, const char *val);
 #endif /* TCL */

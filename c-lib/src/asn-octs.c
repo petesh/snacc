@@ -30,6 +30,7 @@
  */
 
 #include <ctype.h>
+#include <memory.h>
 
 #include "asn-config.h"
 #include "asn-len.h"

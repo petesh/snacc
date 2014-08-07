@@ -34,19 +34,9 @@
 
 #include "snacc.h"
 
-#if STDC_HEADERS
 #include <stdlib.h>
-#else
-#if HAVE_STRING_H
 #include <string.h>
-#else
 #include <memory.h>
-#endif
-#if HAVE_MALLOC_H
-#include <malloc.h>
-#endif
-#endif
-
 #include <stdio.h>
 
 #include "mem.h"

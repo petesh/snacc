@@ -57,16 +57,7 @@
 #include "asn-type.h"
 #include "asn-real.h"
 
-#ifndef IEEE_REAL_LIB
-/* ieee functions (in case not in math.h)*/
-extern "C" {
-extern int iszero (double);
-extern int isinf (double);
-extern int signbit (double);
-extern int ilogb (double);
-extern double scalbn (double, int);
-}
-#endif
+using namespace std;
 
 double AsnPlusInfinity();
 double AsnMinusInfinity();
@@ -733,6 +724,10 @@ void AsnReal::BDecContent (BUF_TYPE b, AsnTag tagId, AsnLen elmtLen, AsnLen &byt
     }
     else
     {
+        if (b.ReadError()) {
+            Asn1Error << "AsnReal::BDecContent: ERROR - decoded past end of data" << endl;
+            longjmp (env, 1);
+        }
         if (firstOctet & REAL_BINARY)
         {
             firstExpOctet = b.GetByte();
@@ -764,9 +759,13 @@ void AsnReal::BDecContent (BUF_TYPE b, AsnTag tagId, AsnLen elmtLen, AsnLen &byt
                         exponent = (-1 <<8) | firstExpOctet;
                     else
                         exponent = firstExpOctet;
-                    for (;i > 0; firstExpOctet--)
+                    for (;i > 0; i--)
                         exponent = (exponent << 8) | b.GetByte();
                     break;
+            }
+            if (b.ReadError()) {
+                Asn1Error << "AsnReal::BDecContent: ERROR - decoded past end of data" << endl;
+                longjmp (env, 1);
             }
 
             mantissa = 0.0;
@@ -774,6 +773,10 @@ void AsnReal::BDecContent (BUF_TYPE b, AsnTag tagId, AsnLen elmtLen, AsnLen &byt
             {
                 mantissa *= (1<<8);
                 mantissa +=  b.GetByte();
+                if (b.ReadError()) {
+                    Asn1Error << "AsnReal::BDecContent: ERROR - decoded past end of data" << endl;
+                    longjmp (env, 1);
+                }
             }
 
             /* adjust N by scaling factor */
@@ -841,7 +844,7 @@ void AsnReal::BDec (BUF_TYPE b, AsnLen &bytesDecoded, ENV_TYPE env)
     BDecContent (b, MAKE_TAG_ID (UNIV, PRIM, REAL_TAG_CODE), elmtLen, bytesDecoded, env);
 }
 
-void AsnReal::Print (ostream &os) const
+void AsnReal::Print (std::ostream &os) const
 {
   os << value;
 }

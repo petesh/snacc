@@ -83,7 +83,7 @@ AUTOMAKE_OPTIONS = 1.4 foreign
 # c++ and tcl build directories:
 
 lib_LTLIBRARIES = libasn1cxxtcl.la
-BUILT_SOURCES = asn-useful.C asn-useful.h
+BUILT_SOURCES = asn-useful.cpp asn-useful.h
 libasn1cxxtcl_la_SOURCES = asn-any.C asn-bits.C asn-bool.C asn-enum.C 	asn-int.C asn-len.C asn-list.C asn-null.C asn-octs.C asn-oid.C 	asn-real.C asn-tag.C asn-type.C hash.C meta.C print.C 	tcl-if.C str-stk.C tkAppInit.c $(BUILT_SOURCES)
 
 cxxpkgincludedir = $(pkgincludedir)/c++
@@ -138,7 +138,7 @@ OBJECTS = $(libasn1cxxtcl_la_OBJECTS)
 
 all: all-redirect
 .SUFFIXES:
-.SUFFIXES: .C .S .c .lo .o .s
+.SUFFIXES: .cpp .C .S .c .lo .o .s
 $(srcdir)/Makefile.in: Makefile.am $(top_srcdir)/configure.in $(ACLOCAL_M4) 
 	cd $(top_srcdir) && $(AUTOMAKE) --foreign --include-deps c++-lib/src/Makefile
 
@@ -214,7 +214,11 @@ libasn1cxxtcl.la: $(libasn1cxxtcl_la_OBJECTS) $(libasn1cxxtcl_la_DEPENDENCIES)
 	$(CXXLINK) -rpath $(libdir) $(libasn1cxxtcl_la_LDFLAGS) $(libasn1cxxtcl_la_OBJECTS) $(libasn1cxxtcl_la_LIBADD) $(LIBS)
 .C.o:
 	$(CXXCOMPILE) -c $<
+.cpp.o:
+	$(CXXCOMPILE) -c $<
 .C.lo:
+	$(LTCXXCOMPILE) -c $<
+.cpp.lo:
 	$(LTCXXCOMPILE) -c $<
 
 install-cxxpkgincludeHEADERS: $(cxxpkginclude_HEADERS)
@@ -361,7 +365,7 @@ mostlyclean distclean maintainer-clean
 # by libasn1cxxtcl_la_SOURCES that requires the built sources.
 meta.lo: $(BUILT_SOURCES)
 
-# target to make asn-useful.h and asn-useful.C:
+# target to make asn-useful.h and asn-useful.cpp:
 $(BUILT_SOURCES): $(SNACC) $(USEFUL_TYPES)
 	if test "x$(BUFFLAGS)" = x-DTCL; then \
 	  $(SNACC) -C @SNACC_NOVOLAT@ -l 50 -tcl "" $(USEFUL_TYPES); \

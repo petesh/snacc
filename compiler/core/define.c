@@ -34,6 +34,7 @@
 #include "asn-incl.h"
 #include "mem.h"
 #include "define.h"
+#include <string.h>
 
 /* for CompareOids from snacc_util.c*/
 int CompareOids PROTO ((OID *oid1, OID *oid2));

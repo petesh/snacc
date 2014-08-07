@@ -104,7 +104,7 @@ extern unsigned long expBufDataBlkSizeG;
 #define ExpBufHasNoData( b)		((b)->dataStart == (b)->dataEnd)
 #define ExpBufDataSize( b)		((b)->dataEnd - (b)->dataStart)
 #define ExpBufDataBlkSize( b)		((b)->blkEnd - (b)->blkStart)
-#define ExpBufDataPtr( b)		(ExpBufHasNoData (b)? NULL: (b)->dataStart)
+#define ExpBufDataPtr(b)		(ExpBufHasNoData (b) ? NULL: (b)->dataStart)
 
 #endif  /* DEBUG || USE_GEN_BUF */
 
@@ -129,7 +129,7 @@ void ExpBufCopyToFile PROTO ((ExpBuf *b, FILE *f));
 void		ExpBufSkip PROTO (( ExpBuf**, unsigned long len));
 int		ExpBufCopy PROTO (( char *dst, ExpBuf **b, unsigned long len));
 unsigned char	ExpBufPeekByte PROTO (( ExpBuf **b));
-#if TTBL
+#if defined(TTBL) && TTBL == 1
 int		ExpBufPeekCopy PROTO ((char *dst, ExpBuf **b, unsigned long len));
 char		*ExpBufPeekSeg PROTO ((ExpBuf **b, unsigned long *len));
 #endif

@@ -39,6 +39,7 @@
  */
 
 #include <stdio.h>
+#include <memory.h>
 
 #include "asn-incl.h"
 #include "asn1module.h"
@@ -197,7 +198,7 @@ PrintCBerDecoder PARAMS ((src, hdr, r, m,  td, longJmpVal),
             }
             fprintf (src,"    {\n");
             fprintf (src,"        Asn1Error (\"B%s: ERROR - wrong tag\\n\");\n", ctdi->decodeRoutineName);
-            fprintf (src,"        longjmp (env, %d);\n", (*longJmpVal)--);
+            fprintf (src,"        longjmp (env, %ld);\n", (*longJmpVal)--);
             fprintf (src,"    }\n");
 
             fprintf (src,"    elmtLen%d = BDecLen (b, bytesDecoded, env);\n", ++elmtLevel);
@@ -214,7 +215,7 @@ PrintCBerDecoder PARAMS ((src, hdr, r, m,  td, longJmpVal),
     if ((typeId != BASICTYPE_ANY) && (typeId != BASICTYPE_ANYDEFINEDBY))
         fprintf (src,"    B%sContent (b, tag, elmtLen%d, result, bytesDecoded, env);\n", ctdi->decodeRoutineName, elmtLevel);
     else
-        fprintf (src,"    B%s (b, result, bytesDecoded, env);\n", ctdi->decodeRoutineName, elmtLevel);
+        fprintf (src,"    B%s (b, result, bytesDecoded, env);\n", ctdi->decodeRoutineName);
 
 
     /* grab any EOCs that match redundant, indef lengths */
@@ -587,7 +588,7 @@ PrintCBerElmtDecodeCode PARAMS ((src, td, parent, t, elmtLevel, totalLevel, tagL
     if (tmpType->basicType->choiceId == BASICTYPE_ANY)
     {
         fprintf (src,"/* ANY - Fix Me ! */\n");
-        fprintf (src,"    SetAnyTypeBy???(%s, ???);\n", elmtVarName);
+        fprintf (src,"    SetAnyTypeBy?" "?" "?(%s, ??" "?);\n", elmtVarName);
         fprintf (src,"    B%s (b, %s, &%s%d, env);\n", ctri->decodeRoutineName, elmtVarName, decodedLenVarNameG, totalLevel);
     }
     else if (tmpType->basicType->choiceId == BASICTYPE_ANYDEFINEDBY)
@@ -739,7 +740,7 @@ PrintCBerSetDecodeCode PARAMS ((src, td, parent, elmts, elmtLevel, totalLevel, t
         fprintf (src,"    else if (elmtLen%d != 0)\n", elmtLevel);
         fprintf (src,"    {\n");
         fprintf (src,"         Asn1Error (\"Expected an empty SET\\n\");\n");
-        fprintf (src,"         longjmp (env, %d);\n",(*longJmpValG)--);
+        fprintf (src,"         longjmp (env, %ld);\n",(*longJmpValG)--);
 
         fprintf (src,"    }\n");
 
@@ -897,7 +898,7 @@ PrintCBerSetDecodeCode PARAMS ((src, td, parent, elmts, elmtLevel, totalLevel, t
 
                     fprintf (src,"    {\n");
                     fprintf (src,"         Asn1Error (\"Unexpected Tag\\n\");\n");
-                    fprintf (src,"         longjmp (env, %d);\n", (*longJmpValG)--);
+                    fprintf (src,"         longjmp (env, %ld);\n", (*longJmpValG)--);
                     fprintf (src,"    }\n\n");
                     fprintf (src,"elmtLen%d = BDecLen (b, &totalElmtsLen%d, env);\n", ++elmtLevel, totalLevel);
                 }
@@ -948,7 +949,7 @@ PrintCBerSetDecodeCode PARAMS ((src, td, parent, elmts, elmtLevel, totalLevel, t
 
     fprintf (src, "    default:\n");
     fprintf (src, "        Asn1Error (\"B%sContent: ERROR - Unexpected tag in SET\\n\");\n", routineName);
-    fprintf (src, "        longjmp (env, %d);\n",(*longJmpValG)--);
+    fprintf (src, "        longjmp (env, %ld);\n",(*longJmpValG)--);
     fprintf (src, "        break;\n");
 
 /*
@@ -963,7 +964,7 @@ PrintCBerSetDecodeCode PARAMS ((src, td, parent, elmts, elmtLevel, totalLevel, t
 
     fprintf (src, "    {\n");
     fprintf (src, "        Asn1Error (\"B%sContent: ERROR - non-optional elmt missing from SET\\n\");\n", routineName);
-    fprintf (src, "        longjmp (env, %d);\n",(*longJmpValG)--);
+    fprintf (src, "        longjmp (env, %ld);\n",(*longJmpValG)--);
     fprintf (src, "    }\n");
 
 }  /*  PrintCBerSetDecodeCode */
@@ -1023,7 +1024,7 @@ PrintCBerSeqDecodeCode PARAMS ((src, td, parent, elmts, elmtLevel, totalLevel, t
         fprintf (src,"    else if (elmtLen%d != 0)\n", elmtLevel);
         fprintf (src,"    {\n");
         fprintf (src,"         Asn1Error (\"Expected an empty SEQUENCE\\n\");\n");
-        fprintf (src,"         longjmp (env, %d);\n",(*longJmpValG)--);
+        fprintf (src,"         longjmp (env, %ld);\n",(*longJmpValG)--);
 
         fprintf (src,"    }\n");
 
@@ -1249,7 +1250,7 @@ PrintCBerSeqDecodeCode PARAMS ((src, td, parent, elmts, elmtLevel, totalLevel, t
 
                     fprintf (src,"    {\n");
                     fprintf (src,"         Asn1Error (\"Unexpected Tag\\n\");\n");
-                    fprintf (src,"         longjmp (env, %d);\n",(*longJmpValG)--);
+                    fprintf (src,"         longjmp (env, %ld);\n",(*longJmpValG)--);
                     fprintf (src,"    }\n\n");
                     fprintf (src,"    elmtLen%d = BDecLen (b, &totalElmtsLen%d, env);\n", ++elmtLevel, totalLevel);
                 }
@@ -1379,7 +1380,7 @@ PrintCBerSeqDecodeCode PARAMS ((src, td, parent, elmts, elmtLevel, totalLevel, t
             fprintf (src,"        if (elmtLen%d == INDEFINITE_LEN)\n", initialElmtLevel);
             fprintf (src,"            BDecEoc (b, &totalElmtsLen%d, env);\n", totalLevel);
             fprintf (src,"        else if (totalElmtsLen%d != elmtLen%d)\n", totalLevel, initialElmtLevel);
-            fprintf (src,"            longjmp (env, %d);\n",(*longJmpValG)--);
+            fprintf (src,"            longjmp (env, %ld);\n",(*longJmpValG)--);
         }
 
         /*
@@ -1400,7 +1401,7 @@ PrintCBerSeqDecodeCode PARAMS ((src, td, parent, elmts, elmtLevel, totalLevel, t
 
             fprintf (src, "    }\n"); /* end of tag check if */
             fprintf (src, "    else\n");
-            fprintf (src, "        longjmp (env, %d);\n", (*longJmpValG)--);
+            fprintf (src, "        longjmp (env, %ld);\n", (*longJmpValG)--);
         }
         else
         {
@@ -1417,7 +1418,7 @@ PrintCBerSeqDecodeCode PARAMS ((src, td, parent, elmts, elmtLevel, totalLevel, t
      */
 
     fprintf (src,"    if (!seqDone)\n");
-    fprintf (src, "        longjmp (env, %d);\n\n", (*longJmpValG)--);
+    fprintf (src, "        longjmp (env, %ld);\n\n", (*longJmpValG)--);
 
 }  /*  PrintCBerSeqDecodeCode */
 
@@ -1590,7 +1591,7 @@ PrintCBerListDecoderCode PARAMS ((src, td, list, elmtLevel, totalLevel, tagLevel
 
             fprintf (src,"    {\n");
             fprintf (src,"         Asn1Error (\"Unexpected Tag\\n\");\n");
-            fprintf (src,"         longjmp (env, %d);\n", (*longJmpValG)--);
+            fprintf (src,"         longjmp (env, %ld);\n", (*longJmpValG)--);
             fprintf (src,"    }\n\n");
             fprintf (src,"    elmtLen%d = BDecLen (b, &totalElmtsLen%d, env);\n", ++elmtLevel, totalLevel);
         }
@@ -1638,7 +1639,7 @@ PrintCBerListDecoderCode PARAMS ((src, td, list, elmtLevel, totalLevel, tagLevel
         fprintf (src, "    else  /* wrong tag */\n");
         fprintf (src,"    {\n");
         fprintf (src,"         Asn1Error (\"Unexpected Tag\\n\");\n");
-        fprintf (src,"         longjmp (env, %d);\n", (*longJmpValG)--);
+        fprintf (src,"         longjmp (env, %ld);\n", (*longJmpValG)--);
         fprintf (src,"    }\n");
     }
     fprintf (src, "    } /* end of for */\n\n");
@@ -1813,7 +1814,7 @@ PrintCBerChoiceDecodeCode PARAMS ((src, td, t, elmtLevel, totalLevel, tagLevel, 
 
                     fprintf (src,"    {\n");
                     fprintf (src,"         Asn1Error (\"Unexpected Tag\\n\");\n");
-                    fprintf (src,"         longjmp (env, %d);\n", (*longJmpValG)--);
+                    fprintf (src,"         longjmp (env, %ld);\n", (*longJmpValG)--);
                     fprintf (src,"    }\n\n");
                     fprintf (src,"    elmtLen%d = BDecLen (b, &totalElmtsLen%d, env);\n", ++elmtLevel, totalLevel);
                 }
@@ -1868,7 +1869,7 @@ PrintCBerChoiceDecodeCode PARAMS ((src, td, t, elmtLevel, totalLevel, tagLevel, 
 
     fprintf (src,"    default:\n");
     fprintf (src,"        Asn1Error (\"ERROR - unexpected tag in CHOICE\\n\");\n");
-    fprintf (src,"        longjmp (env, %d);\n",(*longJmpValG)--);
+    fprintf (src,"        longjmp (env, %ld);\n",(*longJmpValG)--);
     fprintf (src,"        break;\n");
 
     fprintf (src, "    } /* end switch */\n");

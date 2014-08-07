@@ -41,7 +41,7 @@
 /* #undef WORDS_BIGENDIAN */
 
 /* Define if the X Window System is missing or not being used.  */
-/* #undef X_DISPLAY_MISSING */
+#define X_DISPLAY_MISSING 1
 
 /* Define if lex declares yytext as a char * by default, not a char[].  */
 #define YYTEXT_POINTER 1
@@ -97,7 +97,7 @@
 /* #undef HAVE_TCL */
 
 /* does the compiler support volatile functions (and is abort() volatile?) */
-/* #undef COMPILER_WITHOUT_VOLATILE_FUNCTIONS */
+#define COMPILER_WITHOUT_VOLATILE_FUNCTIONS 1
 
 /* The number of bytes in a double.  */
 #define SIZEOF_DOUBLE 8
@@ -106,7 +106,7 @@
 #define SIZEOF_INT 4
 
 /* The number of bytes in a long.  */
-#define SIZEOF_LONG 4
+#define SIZEOF_LONG 8
 
 /* The number of bytes in a short.  */
 #define SIZEOF_SHORT 2
@@ -133,7 +133,7 @@
 #define HAVE_FCNTL_H 1
 
 /* Define if you have the <malloc.h> header file.  */
-/* #undef HAVE_MALLOC_H */
+#define HAVE_MALLOC_H 1
 
 /* Define if you have the <memory.h> header file.  */
 #define HAVE_MEMORY_H 1

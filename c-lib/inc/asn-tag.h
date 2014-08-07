@@ -217,7 +217,7 @@ typedef enum
 
 
 AsnTag BDecTag PROTO ((BUF_TYPE  b, AsnLen *bytesDecoded, ENV_TYPE env));
-#if TTBL
+#if defined(TTBL) && TTBL == 1
 AsnTag PeekTag PROTO ((BUF_TYPE b, ENV_TYPE env));
 #endif
 

@@ -59,7 +59,7 @@ int		SBufWriteError PROTO ((SBuf *b));
 void		SBufSkip PROTO ((SBuf *b, long int skipLen));
 void		SBufCopy PROTO ((char *dst, SBuf *b, long int copyLen));
 unsigned char	SBufPeekByte PROTO ((SBuf *b));
-#if TTBL
+#if defined(TTBL) && TTBL == 1
 char		*SBufPeekSeg PROTO ((SBuf *b, long int *lenPtr));
 void		SBufPeekCopy PROTO ((char *dst, SBuf *b, long int copyLen));
 #endif

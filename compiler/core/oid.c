@@ -30,6 +30,7 @@
  */
 
 #include <stdio.h> /* for FILE * */
+#include <string.h>
 
 #include "asn-incl.h"
 #include "oid.h"
@@ -51,18 +52,18 @@ typedef struct ArcNameMapElmt
  */
 ArcNameMapElmt oidArcNameMapG[] =
 {
-    "ccitt", 0,
-    "iso", 1,
-    "joint-iso-ccitt", 2,
-    "standard", 0,
-    "registration-authority", 1,
-    "member-body", 2,
-    "identified-organization", 3,
-    "recommendation", 0,
-    "question", 1,
-    "administration", 2,
-    "network-operator", 3,
-    NULL,-1
+    {"ccitt", 0} ,
+    {"iso", 1},
+    {"joint-iso-ccitt", 2},
+    {"standard", 0},
+    {"registration-authority", 1},
+    {"member-body", 2},
+    {"identified-organization", 3},
+    {"recommendation", 0},
+    {"question", 1},
+    {"administration", 2},
+    {"network-operator", 3},
+    {NULL,-1}
 };
 
 

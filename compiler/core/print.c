@@ -174,7 +174,7 @@ PrintOid PARAMS ((f, oid),
          *  { 2 }
          */
         else if (oid->arcNum != NULL_OID_ARCNUM)
-            fprintf (f, "%d", oid->arcNum);
+            fprintf (f, "%ld", oid->arcNum);
 
 
         fprintf (f, " ");

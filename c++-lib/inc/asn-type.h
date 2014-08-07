@@ -78,12 +78,12 @@
 
 #define SUPPORT_ANY_TYPE
 
-#if TCL
+#if defined(TCL) && TCL == 1
 #include <tcl.h>
 #undef VOID
 #endif
 
-#if META
+#if defined(META) && META == 1
 #include "meta.h"
 #endif
 
@@ -111,9 +111,9 @@ public:
 
 #endif
 
-  virtual void			Print (ostream &) const;
+  virtual void			Print (std::ostream &) const;
 
-#if META
+#if defined(META) && META == 1
   static const AsnTypeDesc	_desc;
 
   virtual const AsnTypeDesc	*_getdesc() const;
@@ -122,7 +122,7 @@ public:
 private:
   const char			*_typename() const;
 
-#if TCL
+#if defined(TCL) && TCL == 1
 public:
   virtual int			TclGetDesc (Tcl_DString *) const;
   virtual int			TclGetVal (Tcl_Interp *) const;

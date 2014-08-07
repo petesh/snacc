@@ -701,7 +701,7 @@ EOF
 	  test $? != 0 && echo "${UNAME_MACHINE}-pc-linux-gnuoldld" && exit 0
 
 	  case "${UNAME_MACHINE}" in
-	  i?86)
+	  i?86|x86_64)
 	    VENDOR=pc;
 	    ;;
 	  *)

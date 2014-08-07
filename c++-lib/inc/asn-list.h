@@ -86,7 +86,7 @@ public:
 				  last (NULL)
 				{}
 
-  friend ostream		&operator << (ostream &os, AsnList &l);
+  friend std::ostream		&operator << (std::ostream &os, AsnList<T> &l);
 
   void				SetCurrElmt (unsigned long int index);
   void				SetCurrToFirst()			{ curr = first; }
@@ -124,12 +124,12 @@ public:
 
   PDU_MEMBER_MACROS
 
-#if META
+#if defined(META) && META == 1
   static const AsnTypeDesc	_desc;
 
   const AsnTypeDesc		*_getdesc() const;
 
-#if TCL
+#if defined(TCL) && TCL == 1
   int				TclGetVal (Tcl_Interp *) const;
   int				TclSetVal (Tcl_Interp *, const char *val);
 #endif /* TCL */

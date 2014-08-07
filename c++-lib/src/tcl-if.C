@@ -28,8 +28,7 @@
 #include <assert.h>
 #include <unistd.h>
 #include <stdlib.h>
-#include <strstream.h>
-#include <fstream.h>
+#include <fstream>
 #include <string.h>
 
 #include "asn-incl.h"
@@ -43,6 +42,8 @@ extern "C" int strcasecmp (const char* s1, const char* s2);
 
 #include "tcl-if.h"
 #include "init.h"
+
+using namespace std;
 
 //\[banner "utility functions"]-----------------------------------------------------------------------------------------------------
 static bool strniabbr (const char *pattern, const char *test, size_t min)
@@ -385,7 +386,7 @@ SnaccTcl::SnaccTcl (Tcl_Interp *i)
       Tcl_HashEntry *entry = Tcl_CreateHashEntry (&types, _typename, &created);
       if (!created)
       {
-	cerr << "fatal error: duplicate type " << _typename << endl;
+	fprintf(stderr, "fatal error: duplicate type %s\n", _typename);
 	exit (1);
       }
       Tcl_SetHashValue (entry, *typedesc);

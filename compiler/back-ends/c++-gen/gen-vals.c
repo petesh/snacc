@@ -196,7 +196,7 @@ PrintCxxOidValue PARAMS ((f, r, v),
     if (firstArcNum > 2)
         firstArcNum = 2;
 
-    fprintf (f, "%u, %u", firstArcNum, arcNum - (firstArcNum * 40));
+    fprintf (f, "%lu, %lu", firstArcNum, arcNum - (firstArcNum * 40));
 
     for (; i < v->octetLen; )
     {

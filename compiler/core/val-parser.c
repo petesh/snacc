@@ -39,6 +39,7 @@
 
 #include <ctype.h> /* for isalpha, isdigit etc macros */
 #include <stdio.h>
+#include <string.h>
 
 #include "asn-incl.h"
 #include "asn1module.h"
@@ -80,7 +81,7 @@
  * a couple macros for errmsg generation
  */
 #define PRINT_ERR_LOC(m, vd)\
-   fprintf (stderr,"file \"%s\", line %d (or near): ", m->asn1SrcFileName, valLineNoG);
+   fprintf (stderr,"file \"%s\", line %ld (or near): ", m->asn1SrcFileName, (long)valLineNoG);
 
 
 #define PRINT_VAL(vd)\
@@ -327,7 +328,7 @@ StripComments PARAMS ((s, len),
             cpy[cpyIndex++] = s[sIndex++];
     }
 
-    cpy[cpyIndex] == '\0';  /* add  NULL terminator */
+    cpy[cpyIndex] = '\0';  /* add  NULL terminator */
     return cpy;
 }  /* StripComments */
 

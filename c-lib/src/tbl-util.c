@@ -19,6 +19,7 @@
 
 
 #include <stdio.h>
+#include <string.h>
 #include "tbl-incl.h"
 #include "sbuf.h"
 

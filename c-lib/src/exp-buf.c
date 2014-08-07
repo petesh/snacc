@@ -95,6 +95,8 @@
 #include "asn-config.h"
 #include "gen-buf.h"
 #include "exp-buf.h"
+#include <memory.h>
+#include <string.h>
 
 
 /* default buffer data block size (used when allocating) */
@@ -851,10 +853,13 @@ ExpBufCopyToFile PARAMS ((b, f),
 
     for ( ; b != NULL; b = ExpBufNext (b))
     {
-        writeLen = fwrite (ExpBufDataPtr (b), sizeof (char), ExpBufDataSize (b), f);
+        void *pointer = ExpBufDataPtr (b);
+        if (pointer) {
+            writeLen = fwrite (ExpBufDataPtr (b), sizeof (char), ExpBufDataSize (b), f);
 
-        if (writeLen != ExpBufDataSize (b))
-            fprintf (stderr, "ExpBufCopyToFile: error during writing\n");
+            if (writeLen != ExpBufDataSize (b))
+                fprintf (stderr, "ExpBufCopyToFile: error during writing\n");
+        }
     }
 }
 

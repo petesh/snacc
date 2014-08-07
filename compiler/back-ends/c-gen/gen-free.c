@@ -99,7 +99,7 @@ PrintCFree PARAMS ((src, hdr, r, mods, m, td),
             fprintf (src,"{\n");
             PrintCFreeLocals (src, td);
             fprintf (src,"    if (%s == NULL)\n", valueArgNameG);
-            fprintf (src,"        return;\n", valueArgNameG);
+            fprintf (src,"        return;\n");
             PrintCFreeChoiceElmts (src, td, td->type, valueArgNameG);
             fprintf (src,"}  /* %s */",td->cTypeDefInfo->freeRoutineName);
             fprintf (hdr,"\n\n");
@@ -112,7 +112,7 @@ PrintCFree PARAMS ((src, hdr, r, mods, m, td),
             fprintf (src,"{\n");
             PrintCFreeLocals (src, td);
             fprintf (src,"    if (%s == NULL)\n", valueArgNameG);
-            fprintf (src,"        return;\n", valueArgNameG);
+            fprintf (src,"        return;\n");
             PrintCFreeElmts (src, td, td->type, td->type->basicType->a.set, valueArgNameG);
             fprintf (src,"}  /* %s */", td->cTypeDefInfo->freeRoutineName);
             fprintf (hdr,"\n\n");
@@ -126,7 +126,7 @@ PrintCFree PARAMS ((src, hdr, r, mods, m, td),
             fprintf (src,"{\n");
             PrintCFreeLocals (src, td);
             fprintf (src,"    if (%s == NULL)\n", valueArgNameG);
-            fprintf (src,"        return;\n", valueArgNameG);
+            fprintf (src,"        return;\n");
             PrintCFreeListRoutineBody (src, td, td->type, valueArgNameG);
             fprintf (src,"}  /* %s */", td->cTypeDefInfo->freeRoutineName);
             fprintf (hdr,"\n\n");

@@ -49,7 +49,7 @@
 
 #include "asn-config.h"
 #include "hash.h"
-
+#include <string.h>
 
 /*
  *

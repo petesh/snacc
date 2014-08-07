@@ -25,7 +25,7 @@
 
 #include "snaccconfig.h"
 
-#if STDC_HEADERS
+#if defined(STDC_HEADERS) && STDC_HEADERS == 1
 #include <stdlib.h>
 #endif
 
@@ -33,17 +33,17 @@
 #define NULL	0
 #endif
 
-#if HAVE_MEMCMP /* memcmp(3) returns <0, 0 and 0, bcmp(3) returns only 0 and !0 */
+#if defined(HAVE_MEMCMP) && (HAVE_MEMCMP == 1) /* memcmp(3) returns <0, 0 and 0, bcmp(3) returns only 0 and !0 */
 #define memcmpeq( a, b, len)	memcmp (a, b, len)
 #else
 #define memcmpeq( a, b, len)	bcmp (a, b, len)
 #endif
-#if HAVE_MEMSET
+#if defined(HAVE_MEMSET) && HAVE_MEMSET == 1
 #define memzero( p, len)	memset (p, 0, len)
 #else
 #define memzero( p, len)	bzero (p, len)
 #endif
-#if !HAVE_MEMCPY
+#ifndef HAVE_MEMCPY
 #define memcpy( dst, src, len)	bcopy (src, dst, len)
 #endif
 
@@ -55,7 +55,7 @@
 #  define RETURN_THIS_FOR_COMPILERS_WITHOUT_VOLATILE_FUNCTIONS
 #endif
 
-#if !BOOL_BUILTIN
+#ifndef BOOL_BUILTIN
 #ifndef true
 // enum bool { false, true };
 // the above looks elegant, but leads to anachronisms (<, ==, !=, ... return value of type int, not enum bool), therefore:
@@ -103,19 +103,19 @@ enum { false, true };
 
 #include "policy.h"
 
-#if COMPILER
+#if defined(COMPILER) && COMPILER == 1
 #define TCL	(HAVE_TCL && !NO_TCL)
 #define META	(TCL && !NO_META)
 #endif
 
-#if MAKEDEPEND
-#if !NO_META
+#if defined(MAKEDEPEND) && MAKEDEPEND == 1
+#ifndef NO_META
 #ifdef META
 #undef META
 #endif
 #define META	1
 #endif
-#if !NO_TCL
+#ifndef NO_TCL
 #ifdef TCL
 #undef TCL
 #endif
@@ -123,7 +123,7 @@ enum { false, true };
 #endif
 #endif
 
-#if TCL
+#if defined(TCL) && TCL == 1
 #ifdef META
 #undef META
 #endif
@@ -138,13 +138,13 @@ enum { false, true };
 #define if_IBM_ENC( code)
 #endif
 
-#if META
+#if defined(META) && META == 1
 #define if_META( code)		code
 #else
 #define if_META( code)
 #endif
 
-#if TCL && META
+#if (defined(TCL) && (TCL == 1)) && (defined(META) && (META == 1))
 #define if_TCL( code)		code
 #else
 #define if_TCL( code)

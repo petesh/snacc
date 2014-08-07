@@ -361,7 +361,7 @@ asn-useful.h asn-useful.c: $(SNACC) $(USEFUL_TYPES)
 tbl.h tbl.c: $(SNACC) $(USEFUL_TYPES) $(ASN1_SRC_DIR)/tbl.asn1
 	$(SNACC) -u $(USEFUL_TYPES) $(ASN1_SRC_DIR)/tbl.asn1
 	@PATCH@ < $(top_srcdir)/c-lib/tbl.h.patch
-	echo '#if TTBL' > tbl.c.tmp
+	echo '#if defined(TTBL) && TTBL == 1' > tbl.c.tmp
 	cat tbl.c >> tbl.c.tmp
 	echo '#endif /* TTBL */' >> tbl.c.tmp
 	mv tbl.c.tmp tbl.c

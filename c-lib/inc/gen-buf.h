@@ -22,7 +22,7 @@
  * of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-#if USE_GEN_BUF
+#if defined(USE_GEN_BUF) && USE_GEN_BUF == 1
 
 #ifndef _gen_buf_h_
 #define _gen_buf_h_

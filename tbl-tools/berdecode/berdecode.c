@@ -1,6 +1,7 @@
 #include "tbl-gen.h"
 #include "sbuf.h"
 #include "tbl-dbg.h"
+#include <unistd.h>
 
 #if TIME_WITH_SYS_TIME
 # include <sys/time.h>
@@ -141,6 +142,7 @@ int decodefn (char* filename)
 	decode(fd);
 	close(fd);
 	}
+    return (0);
     }
 
 int main (int argc, char* argv[])

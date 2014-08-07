@@ -41,6 +41,7 @@
 #include "asn-config.h"
 #include "asn-len.h"
 
+using namespace std;
 
 /*
  * Encodes the given length to the given buffer.

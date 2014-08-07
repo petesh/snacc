@@ -99,6 +99,12 @@ public:
 
     size_t CopyOut (char *dst, size_t copyLen)
     {
+    if (readLoc + copyLen < readLoc)
+    {
+        // overflow error
+        readError = 1;
+        return 0;
+    }
 	if (readLoc + copyLen > dataEnd)
 	{
 	    copyLen = dataEnd - readLoc;

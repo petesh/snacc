@@ -369,12 +369,12 @@ MakeBaseFileName PARAMS ((refName),
     int		stublen;
     char	*stub;
 
-    if (base = strrchr (refName, '/'))
+    if ((base = strrchr (refName, '/')))
       base++;
     else
       base = refName;
 
-    if (dot = strrchr (base, '.'))
+    if ((dot = strrchr (base, '.')))
       stublen = dot - base;
     else
       stublen = strlen (base);
@@ -543,7 +543,7 @@ char *
 MakeCxxSrcFileName PARAMS ((refName),
     const char *refName)
 {
-    return MakeFileName (refName, ".C");
+    return MakeFileName (refName, ".cpp");
 }
 
 #ifdef _IBM_ENC_

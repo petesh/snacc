@@ -58,11 +58,13 @@
 #include "asn-octs.h"
 #include "str-stk.h"
 
+using namespace std;
+
 extern StrStk strStkG;
 
 AsnOcts::~AsnOcts()
 {
-  delete octs;
+  delete[] octs;
 }
 
 AsnType *AsnOcts::Clone() const
@@ -121,7 +123,7 @@ void AsnOcts::ReSet (const char *str, size_t len)
     if (str != octs)
     {
 #ifndef _IBM_ENC_
-        delete octs;
+        delete[] octs;
         Set (str, len);
 #else
       mem_mgr_ptr->Put ((void *)octs);                /* Guido Grassel, 11.8.93 */
@@ -138,7 +140,7 @@ void AsnOcts::ReSet (const AsnOcts &o)
     if (&o != this) // avoid s = s;
     {
 #ifndef _IBM_ENC_
-        delete octs;
+        delete[] octs;
         Set (o);
 #else
       mem_mgr_ptr->Put ((void *)octs);               /* Guido Grassel, 11.8.93 */
@@ -155,7 +157,7 @@ void AsnOcts::ReSet (const char *str)
     if (str != octs)
     {
 #ifndef _IBM_ENC_
-        delete octs;
+        delete[] octs;
         Set (str);
 #else
       mem_mgr_ptr->Put ((void *)octs);                /* Guido Grassel, 11.8.93 */
@@ -166,7 +168,7 @@ void AsnOcts::ReSet (const char *str)
 
 
 // Prints the AsnOcts to the given ostream in Value Notation.
-void AsnOcts::Print (ostream &os) const
+void AsnOcts::Print (std::ostream &os) const
 {
     int i;
     os << "'";
@@ -199,6 +201,11 @@ AsnLen AsnOcts::BEncContent (BUF_TYPE b)
 // Constructed OCTET STRINGs are always concatenated into primitive ones.
 void AsnOcts::BDecContent (BUF_TYPE b, AsnTag tagId, AsnLen elmtLen, AsnLen &bytesDecoded, ENV_TYPE env)
 {
+    if (elmtLen > 10000)
+    {
+	Asn1Error << "AsnOcts::BDec: ERROR Element length is too long." << endl;
+	longjmp (env,-1);
+    }
     /*
      * tagId is encoded tag shifted into long int.
      * if CONS bit is set then constructed octet string
@@ -407,7 +414,7 @@ int AsnOcts::TclSetVal (Tcl_Interp *interp, const char *valstr)
     ReSet (buf, len);
 
 #ifndef _IBM_ENC_
-  delete buf;
+  delete[] buf;
 #else
   mem_mgr_ptr->Put ((void*) buf);
 #endif /* _IBM_ENC_ */

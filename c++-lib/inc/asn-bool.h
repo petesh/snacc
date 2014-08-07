@@ -52,7 +52,7 @@
 #ifndef _asn_bool_h_
 #define _asn_bool_h_
 
-#if GLASS
+#if defined(GLASS) && GLASS == 1
 // for backwards compatibility:
 #ifndef FALSE
 enum { FALSE = false, TRUE = true };
@@ -64,8 +64,8 @@ class AsnBool: public AsnType
 protected:
 
 // for backwards compatibility:
-#if GLASS
-#if BOOL_BUILTIN
+#if defined(GLASS) && GLASS == 1
+#if defined(BOOL_BUILTIN) && BOOL_BUILTIN == 1
   typedef bool			_bool;
 #else
   enum
@@ -80,7 +80,7 @@ protected:
 
 public:
 				AsnBool (const bool val):
-#if BOOL_BUILTIN
+#if defined(BOOL_BUILTIN) && BOOL_BUILTIN == 1
 				  value (val)
 #else
 				  value (!!val)
@@ -101,14 +101,14 @@ public:
 
   PDU_MEMBER_MACROS
 
-  void				Print (ostream &) const;
+  void				Print (std::ostream &) const;
 
-#if META
+#if defined(META) && META == 1
   static const AsnBoolTypeDesc	_desc;
 
   const AsnTypeDesc		*_getdesc() const;
 
-#if TCL
+#if defined(TCL) && TCL == 1
   int				TclGetVal (Tcl_Interp *) const;
   int				TclSetVal (Tcl_Interp *, const char *val);
 #endif // TCL

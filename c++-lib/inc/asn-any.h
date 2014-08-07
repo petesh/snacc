@@ -81,10 +81,10 @@ public:
 
   PDU_MEMBER_MACROS
 
-  void				Print (ostream &) const;
+  void				Print (std::ostream &) const;
 
 #if 0
-#if TCL
+#if defined(TCL) && TCL == 1
   int				TclGetDesc (Tcl_DString *) const;
   int				TclGetVal (Tcl_DString *) const;
   int				TclSetVal (Tcl_Interp *, const char *val);

@@ -33,7 +33,7 @@ struct AsnMemberDesc // description of CHOICE member; base class for AsnSe_Membe
 				AsnMemberDesc (const char *, const AsnTypeDesc *);
 				AsnMemberDesc();
 
-#if TCL
+#if defined(TCL) && TCL == 1
   virtual int			TclGetDesc (Tcl_DString *) const;
   virtual int			TclGetDesc2 (Tcl_DString *) const;
 #endif
@@ -46,7 +46,7 @@ struct AsnSe_MemberDesc: AsnMemberDesc	// _ == t/quence; description of SET or S
 				AsnSe_MemberDesc (const char *, const AsnTypeDesc *, bool);
 				AsnSe_MemberDesc();
 
-#if TCL
+#if defined(TCL) && TCL == 1
   int				TclGetDesc2 (Tcl_DString *) const;
 #endif
 };
@@ -99,7 +99,7 @@ struct AsnTypeDesc
   virtual const AsnNameDesc	*getnames() const;
   //virtual const AsnMemberDesc	*getmembers() const;
 
-#if TCL
+#if defined(TCL) && TCL == 1
   virtual int			TclGetDesc (Tcl_DString *) const;
   virtual int			TclGetDesc2 (Tcl_DString *) const;
 #endif
@@ -113,7 +113,7 @@ struct AsnNamesTypeDesc: AsnTypeDesc
 
   const AsnNameDesc		*getnames() const;
 
-#if TCL
+#if defined(TCL) && TCL == 1
   int				TclGetDesc (Tcl_DString *) const;
   // for BIT STRING and INTEGER, ENUMERATED has its own:
   int				TclGetDesc2 (Tcl_DString *) const;
@@ -124,7 +124,7 @@ struct AsnEnumTypeDesc: AsnNamesTypeDesc
 {
 				AsnEnumTypeDesc (const AsnModuleDesc *, const char *, bool ispdu, Type, AsnType *(*create)(), const AsnNameDesc *);
 
-#if TCL
+#if defined(TCL) && TCL == 1
   int				TclGetDesc2 (Tcl_DString *) const;
 #endif
 };
@@ -133,7 +133,7 @@ struct AsnMembersTypeDesc: AsnTypeDesc
 {
 				AsnMembersTypeDesc (const AsnModuleDesc *, const char *, bool ispdu, Type, AsnType *(*create)());
 
-#if TCL
+#if defined(TCL) && TCL == 1
   int				TclGetDesc (Tcl_DString *) const;
 #endif
 };
@@ -147,7 +147,7 @@ struct AsnChoiceTypeDesc: AsnMembersTypeDesc
   int				choicebyname (const char *name) const;
   const char			*choicebyvalue (int value) const;
 
-#if TCL
+#if defined(TCL) && TCL == 1
   int				TclGetDesc2 (Tcl_DString *) const;
 #endif
 };
@@ -158,7 +158,7 @@ struct AsnSe_TypeDesc: AsnMembersTypeDesc
 
 				AsnSe_TypeDesc (const AsnModuleDesc *, const char *, bool ispdu, Type, AsnType *(*create)(), const AsnSe_MemberDesc *);
 
-#if TCL
+#if defined(TCL) && TCL == 1
   int				mandatmemberr (Tcl_Interp *interp, const char *membername) const;
   int				TclGetDesc2 (Tcl_DString *) const;
 #endif
@@ -170,7 +170,7 @@ struct AsnListTypeDesc: AsnTypeDesc
 
 				AsnListTypeDesc (const AsnModuleDesc *, const char *, bool ispdu, Type, AsnType *(*create)(), const AsnTypeDesc *);
 
-#if TCL
+#if defined(TCL) && TCL == 1
   int				TclGetDesc (Tcl_DString *) const;
 #endif
 };
@@ -189,7 +189,7 @@ struct AsnAliasTypeDesc: AsnTypeDesc
   const AsnNameDesc		*getnames() const;
   //const AsnMemberDesc		*getmembers() const;
 
-#if TCL
+#if defined(TCL) && TCL == 1
   int				TclGetDesc (Tcl_DString *) const;
 #endif
 };
@@ -212,7 +212,7 @@ struct AsnModuleDesc
 
 extern const AsnModuleDesc	*asnModuleDescs[];
 
-#if TCL
+#if defined(TCL) && TCL == 1
 
 //\[sep]----------------------------------------------------------------------------------------------------------------------------
 // designed to be used with Tcl_SplitList(): argument list that automagically frees itself when it goes out of scope:

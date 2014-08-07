@@ -29,6 +29,6 @@ void	*Realloc PROTO ((void *ptr, int newsize));
 void	Free PROTO ((void *ptr));
 
 /* malloc type */
-#define MT( type)	(type *)Malloc (sizeof (type))
+#define MT(type)	(type *)Malloc (sizeof (type))
 
 #endif

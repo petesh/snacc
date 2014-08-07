@@ -33,6 +33,7 @@
 #include "asn-tag.h"
 #include "asn-octs.h"
 #include "asn-oid.h"
+#include <memory.h>
 
 
 /*
@@ -131,7 +132,7 @@ PrintAsnOid PARAMS ((f,v, indent),
     if (firstArcNum > 2)
         firstArcNum = 2;
 
-    fprintf (f,"%u %u", firstArcNum, arcNum - (firstArcNum * 40));
+    fprintf (f,"%lu %lu", (long)firstArcNum, arcNum - (firstArcNum * 40));
 
     for (; i < v->octetLen; )
     {

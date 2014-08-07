@@ -39,6 +39,7 @@ WHITESPC  [ \t\n\r]
 
 %{
 
+#include <memory.h>
 #include "asn-incl.h"
 #include "mem.h"
 #include "asn1module.h"
@@ -47,6 +48,8 @@ WHITESPC  [ \t\n\r]
 #include "parser.h"
 #include "lex-stuff.h"
 #include "errno.h"
+
+int yylex(void);
 
 unsigned long int myLineNoG = 0;
 
@@ -485,18 +488,21 @@ int
 LexBeginMacroDefContext()
 {
     BEGIN (MACRO_DEF);
+    return 0;
 }
 
 int
 LexBeginBraceBalContext()
 {
     BEGIN (BRACE_BAL);
+    return 0;
 }
 
 int
 LexBeginInitialContext()
 {
     BEGIN (INITIAL);
+    return 0;
 }
 
 /*

@@ -235,6 +235,7 @@ snaccC: $(snaccC_OBJECTS) $(snaccC_DEPENDENCIES)
 	$(LEX) $(AM_LFLAGS) $(LFLAGS) $< && mv $(LEX_OUTPUT_ROOT).c $@
 .y.c:
 	$(YACC) $(AM_YFLAGS) $(YFLAGS) $< && mv y.tab.c $*.c
+	sed -i 's/if\( YYLTYPE_IS_TRIVIAL\)/ifdef\1/' $*.c
 	if test -f y.tab.h; then \
 	if cmp -s y.tab.h $*.h; then rm -f y.tab.h; else mv y.tab.h $*.h; fi; \
 	else :; fi

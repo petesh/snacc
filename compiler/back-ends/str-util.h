@@ -63,6 +63,6 @@ char *MakeCxxSrcFileName PROTO ((const char *moduleName));
 char *MakedbHdrFileName PROTO ((const char *moduleName)); /* 19.8.93 IBM-ENC */
 char *MakedbSrcFileName PROTO ((const char *moduleName)); /* 19.8.93 IBM-ENC */
 #endif /* _IBM_ENC_ */
-#if IDL
+#if defined(IDL) && IDL == 1
 char *MakeIDLFileName PROTO ((const char *moduleName));
 #endif

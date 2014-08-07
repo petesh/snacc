@@ -73,12 +73,19 @@
 
 #include "asn-incl.h"
 #include "mem.h"
+#include "oid.h"
 #include "asn1module.h"
 #include "lib-types.h"
 #include "snacc-util.h"
 #include "exports.h"
 #include "parser.h"
 #include "lex-stuff.h"
+
+int yyerror(char *);
+int yylex(void);
+
+int LexBeginInitialContext();
+
 
 /*
  * smallErrG
@@ -3060,10 +3067,11 @@ SnmpDefValPart:
 
 %%
 
-yyerror (s)
-char*s;
+int
+yyerror (char *s)
 {
-	fprintf (stderr,"file \"%s\", line %d: %s at symbol \"%s\"\n\n", modulePtrG->asn1SrcFileName, myLineNoG, s, yytext);
+	fprintf (stderr,"file \"%s\", line %ld: %s at symbol \"%s\"\n\n", modulePtrG->asn1SrcFileName, myLineNoG, s, yytext);
+	return (0);
 }
 
 
@@ -3155,7 +3163,7 @@ PushApplTag PARAMS ((tagCode, lineNo),
         if (l->tagCode == tagCode)
         {
             PrintErrLoc (modulePtrG->asn1SrcFileName, lineNo);
-            fprintf (stderr,"ERROR - APPLICATION tags can be used only once per ASN.1 module.  The tag \"[APPLICATION %d]\" was previously used on line %d.\n", tagCode, l->lineNo);
+            fprintf (stderr,"ERROR - APPLICATION tags can be used only once per ASN.1 module.  The tag \"[APPLICATION %ld]\" was previously used on line %ld.\n", tagCode, l->lineNo);
             wasDefined = 1;
             smallErrG = 1;
         }

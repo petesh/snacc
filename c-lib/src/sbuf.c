@@ -19,6 +19,8 @@
 #include "asn-config.h"
 #include "gen-buf.h"
 #include "sbuf.h"
+#include <string.h>
+#include <memory.h>
 
 /*
  * casts are used to overcome void * - SBuf * conflict
@@ -141,7 +143,7 @@ char*
 SBufDataPtr PARAMS ((b),
     SBuf *b)
 {
-  b->dataStart;
+  return b->dataStart;
 } /* SBufDataPtr */
 
 /*
@@ -367,6 +369,7 @@ SBufGetByte PARAMS ((b),
         b->readError = 1;
     else
         return (unsigned char)(*(b->readLoc++));
+    return 0;
 } /* SBufGetByte */
 
 

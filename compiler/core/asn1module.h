@@ -293,10 +293,10 @@ typedef struct Module /* SEQUENCE */
     MyString dbHdrFileName;  /* 19.8.93 IBM-ENC */
     MyString dbSrcFileName;  /* 19.8.93 IBM-ENC */
 #endif /* _IBM_ENC_ */
-#if META
+#if defined(META) && META == 1
     MyString	cxxname;
 #endif
-#if IDL
+#if defined(IDL) && IDL == 1
     MyString	idlFileName; /* MyString */
     MyString	idlname;
 #endif
